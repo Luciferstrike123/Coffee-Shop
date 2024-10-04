@@ -41,8 +41,8 @@ function User() {
                     localStorage.clear();
                     setIsLoggedIn(false);
                     setToastMsg({
-                        isError: false,
-                        message: "Your logout has been completed.",
+                        isError: true,
+                        message: "You have logged out!",
                     });
                 })
                 .finally(() => setIsLoading(false));

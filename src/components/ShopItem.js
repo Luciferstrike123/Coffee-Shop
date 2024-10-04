@@ -26,7 +26,7 @@ function ShopItem({ button = true, isInCart = false, ...props }) {
           </span>
         </span>
         <span className="text-xs md:text-base text-white font-semibold">
-          {props.price} TL
+          {props.price} $
         </span>
       </div>
       {button === true && (

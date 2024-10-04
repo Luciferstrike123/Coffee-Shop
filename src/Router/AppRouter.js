@@ -20,12 +20,12 @@ import Edit from "../pages/User/components/Edit/Edit";
 // import Error from "../pages/Error";
 import PrivateRoute from "../routes/PrivateRoutes";
 import LoggedInPrivateRoute from "../routes/LoggedInPrivateRoutes";
-// import AdminRoute from "../routes/AdminRoutes";
-// import AdminPanel from "../pages/AdminPanel";
+import AdminRoute from "../routes/AdminRoutes";
+import AdminPanel from "../pages/AdminPanel";
 import OrderSingle from "../pages/User/components/Order/OrderSingle";
-// import AdminUsers from "../pages/AdminPanel/pages/AdminUsers";
+import AdminUsers from "../pages/AdminPanel/pages/AdminUsers";
 // import AdminBlog from "../pages/AdminPanel/pages/AdminBlog";
-// import AdminShop from "../pages/AdminPanel/pages/AdminShop";
+import AdminShop from "../pages/AdminPanel/pages/AdminShop";
 
 const router = createBrowserRouter([
   {
@@ -90,19 +90,19 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: "/",
-  //   element: <AdminRoute />,
-  //   children: [
-  //     {
-  //       path: "admin",
-  //       element: <AdminPanel />,
-  //     },
-  //     { path: "admin/users", element: <AdminUsers /> },
-  //     { path: "admin/shop", element: <AdminShop /> },
-  //     { path: "admin/blog", element: <AdminBlog /> },
-  //   ],
-  // },
+  {
+    path: "/",
+    element: <AdminRoute />,
+    children: [
+      {
+        path: "admin",
+        element: <AdminPanel />,
+      },
+      { path: "admin/users", element: <AdminUsers /> },
+      { path: "admin/shop", element: <AdminShop /> },
+      // { path: "admin/blog", element: <AdminBlog /> },
+    ],
+  },
   // {
   //   path: "/error",
   //   element: <Error />,

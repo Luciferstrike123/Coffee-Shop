@@ -12,18 +12,25 @@ function Order() {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
+      const userId = localStorage.getItem("user-id");
+      if (!userId) return;
       await axios
-        .get(`${import.meta.env.VITE_BASE_URL}/orders/getorders`, {
-          headers: {
-            "x-access-token": `${localStorage.getItem("access-token")}`,
-          },
-        })
+        .get(`https://dummyjson.com/carts/user/${userId}`)
         .then((resp) => {
-          // console.log(resp.data.orders[0].orders);
-          setOrders(resp.data.orders[0].orders.reverse());
+          const formattedOrders = resp.data.carts.map((cart) => {
+            return {
+              _id: cart.id, // Updated to cart.id instead of cart._id
+              date: cart.date, // You can replace this with a proper date if necessary
+              products: cart.products.map((product) => ({
+                productImage: product.thumbnail, // Using DummyJSON's thumbnail as the image
+              })),
+              total: cart.total, // Total amount for the cart
+            };
+          });
+          setOrders(formattedOrders.reverse()); // Reverse to show the most recent orders first
         })
         .catch((err) => {
-          // console.log(err);
+          console.log(err); // Error handling
         })
         .finally(() => setIsLoading(false));
     })();
@@ -45,9 +52,7 @@ function Order() {
           <Link to={`/user/orders/${order._id}`} key={order._id}>
             <div className="flex justify-between items-center px-4 py-3 rounded-xl border-[1.6px] hover:border-[#cda154]">
               <img
-                src={`${import.meta.env.VITE_BASE_URL}/product/${
-                  order.products[0].product.productImage
-                }`}
+                src={order.products[0].productImage} // Updated to match new productImage structure
                 alt=""
                 className="w-10 md:w-12"
               />
@@ -58,7 +63,7 @@ function Order() {
               </div>
               <div className="flex items-center">
                 <span className="text-xs font-semibold">
-                  {order.total.toFixed(2)} TL
+                  {order.total.toFixed(2)} $
                 </span>
               </div>
             </div>

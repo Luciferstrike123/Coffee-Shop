@@ -19,14 +19,14 @@ function Profile() {
       <div className="flex flex-col gap-5 h-full justify-center w-full md:w-4/5">
         <div className="flex gap-2">
           <InputField
-            label="Ad"
+            label="First Name"
             className="pointer-events-none text-center"
-            defaultValue={user.name}
+            defaultValue={user.firstName}
           />
           <InputField
-            label="Soyad"
+            label="Last Name"
             className="pointer-events-none text-center"
-            defaultValue={user.surname}
+            defaultValue={user.lastName}
           />
         </div>
         <InputField
@@ -35,9 +35,9 @@ function Profile() {
           defaultValue={user.email}
         />
         <TextAreaField
-          label="Adres"
+          label="Address"
           className="pointer-events-none text-center"
-          defaultValue={user.address}
+          defaultValue={user.address.address}
         />
       </div>
     </div>
