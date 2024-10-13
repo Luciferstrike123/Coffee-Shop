@@ -6,6 +6,7 @@
 - [Công Nghệ Sử Dụng](#công-nghệ-sử-dụng)
 - [Góp Phần](#góp-phần)
 - [Giấy Phép](#giấy-phép)
+- [Farewell](#farewell)
 
 ## Giới Thiệu
 - CoffeShop
@@ -17,3 +18,6 @@
 
 ## Sử Dụng
 - npm run dev
+
+## Farewell
+- Happy coding!
