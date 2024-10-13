@@ -12,7 +12,7 @@
 - CoffeShop
 
 
-# Cài đặt dependencies 
+## Cài đặt dependencies 
 - npm install
 - Thay data config database trong file .env
 
