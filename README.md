@@ -8,7 +8,7 @@
 - [Giấy Phép](#giấy-phép)
 
 ## Giới Thiệu
-CoffeShop
+- CoffeShop
 
 
 # Cài đặt dependencies 
@@ -16,4 +16,4 @@ CoffeShop
 - Thay data config database trong file .env
 
 ## Sử Dụng
-npm run dev
+- npm run dev
