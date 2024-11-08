@@ -11,26 +11,27 @@ app.use(express.json());
 // Connect express
 const port = 3300;
 app.listen(port, () => {
-    console.log("Server is listening at port 3300");
+  console.log("Server is listening at port 3300");
 });
 
 // Conenct database
 const Postgreph = async () => {
-    await db
-        .connect()
-        .then(() => {
-            console.log("Connect to database");
-        })
-        .catch((e) => {
-            console.log(e);
-        });
+  await db
+    .connect()
+    .then(() => {
+      console.log("Connect to database");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
 Postgreph();
 
 //Route
 app.use("/api", require("./routes/login"));
 app.use("/api", require("./routes/logout"));
-
+app.use("/api", require("./routes/customer/cus"));
+app.use("/api", require("./routes/employee/employ"));
 
 /*
 http://localhost:3300
@@ -38,5 +39,5 @@ http://localhost:3300
 
 //API
 app.get("/", (req, res) => {
-    res.send("Hello World");
+  res.send("Hello World");
 });
