@@ -21,7 +21,7 @@ export default function AppRoute() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route
-        path="/admin"
+        path="/admin/*"
         element={<ProtectRoute element={<Admin />} allowedRoles={["admin"]} />}
       >
         <Route index element={<Overview />} />
