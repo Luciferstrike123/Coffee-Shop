@@ -32,6 +32,7 @@ app.use("/api", require("./routes/login"));
 app.use("/api", require("./routes/logout"));
 app.use("/api", require("./routes/customer/cus"));
 app.use("/api", require("./routes/employee/employ"));
+app.use("/api", require("./routes/product/index"))
 
 /*
 http://localhost:3300
