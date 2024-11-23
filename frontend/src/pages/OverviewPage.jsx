@@ -2,7 +2,9 @@ import React from "react";
 import Header from "../components/common/Header";
 import { motion } from "framer-motion";
 import StatCard from "../components/common/StatCard";
-import { Zap } from "lucide-react";
+import { Zap, Users, ShoppingBag } from "lucide-react";
+import SalesOverviewChart from "../components/overview/SalesOverviewChart";
+import CategoryDistributionChart from "../components/overview/CategoryDistributionChart";
 
 const OverviewPage = () => {    
     return (
@@ -12,16 +14,21 @@ const OverviewPage = () => {
             <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
                 {/* Stats Card */}
                 <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
                 >
                     <StatCard name="Total Sales" icon={Zap} value='$1,200' color="#6366f1"/>
-                    <StatCard name="Total Sales" icon={Zap} value='$1,200' color="#6366f1"/>
-                    <StatCard name="Total Sales" icon={Zap} value='$1,200' color="#6366f1"/>
-                    <StatCard name="Total Sales" icon={Zap} value='$1,200' color="#6366f1"/>
+                    <StatCard name="Total Users" icon={Users} value='1234' color="#8b56f6"/>
+                    <StatCard name="Total Products" icon={ShoppingBag} value='567' color="#ec4899"/>
                 </motion.div>
+
+                {/* Chart */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 ">
+                    <SalesOverviewChart/>
+                    <CategoryDistributionChart/>
+                </div>
             </main>
         </div>
     )
