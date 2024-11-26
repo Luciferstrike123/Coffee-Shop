@@ -28,3 +28,9 @@ export function showRegister_Suc() {
     icon: "success",
   });
 }
+export function showADD_Suc() {
+  Swal.fire({
+    title: "Product was added Sucessfully!",
+    icon: "success",
+  });
+}

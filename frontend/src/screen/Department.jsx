@@ -8,7 +8,13 @@ export default function Department() {
     <>
       <div className=" bg-zinc-300 ">
         <Nav />
-        <main className="min-h-screen mt-10 mb-3">
+        {/* <main className="min-h-screen mt-10 mb-3">
+          <Outlet />
+        </main> */}
+        <main
+          className="  max-w-full min-h-screen m-auto p-5 transform transition-transform duration-500
+       -translate-x-0"
+        >
           <Outlet />
         </main>
 

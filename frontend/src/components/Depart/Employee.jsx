@@ -27,11 +27,16 @@ export default function Employee() {
         console.error("Error fetching employees:", error);
       });
   };
+  useEffect(() => {
+    setDepartmentId(localStorage.getItem("id"));
+    console.log(departmentId);
+  }, []);
 
   // Trigger fetching employees whenever filters or sorting change
   useEffect(() => {
-    setDepartmentId(localStorage.getItem("id"));
-    fetchEmployees();
+    if (departmentId) {
+      fetchEmployees();
+    }
   }, [departmentId, name, position, sortBy, order]);
 
   // Handle sorting toggle

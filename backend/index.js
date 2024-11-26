@@ -7,6 +7,7 @@ const app = express();
 //App Use
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Connect express
 const port = 3300;
@@ -32,6 +33,7 @@ app.use("/api", require("./routes/login"));
 app.use("/api", require("./routes/logout"));
 app.use("/api", require("./routes/customer/cus"));
 app.use("/api", require("./routes/employee/employ"));
+app.use("/api", require("./routes/product/product"));
 
 /*
 http://localhost:3300
