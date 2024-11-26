@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const SIDEBAR_ITEMS = [
     { name: "Overview", icon: ChartNoAxesGantt, color: "#6366f1", href: "/admin" },
     { name: "Products", icon: ShoppingBag, color: "#8b56f6", href: "/admin/products" },
-    { name: "Users", icon: User, color: "#ec4899", href: "/users" },
+    { name: "Users", icon: User, color: "#ec4899", href: "/admin/users" },
     { name: "Sales", icon: DollarSign, color: "#10b981", href: "/sales" },
     { name: "Orders", icon: ShoppingCart, color: "#f59e0b", href: "/orders" },
     { name: "Analytics", icon: TrendingUp, color: "#3b82f6", href: "/analytics" },
