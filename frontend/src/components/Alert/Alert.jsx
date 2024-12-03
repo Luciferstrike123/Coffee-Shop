@@ -1,10 +1,10 @@
 import Swal from "sweetalert2";
 
-export function showFail() {
+export function showFail(text) {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: "Something went wrong! Try again!!!",
+    text: text,
   });
 }
 

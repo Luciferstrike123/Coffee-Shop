@@ -2,11 +2,14 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Card_Product from "./Card_Product";
+import { useSelector } from "react-redux";
 
 export default function Product() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const statusTabCart = useSelector((store) => store.cart.statusTab);
 
   useEffect(() => {
     // Fetch data from the backend API
@@ -36,8 +39,11 @@ export default function Product() {
 
   return (
     <>
-      <div className="mx-1">
-        <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 gap-5">
+      <div
+        className={` p-5 transform transition-transform duration-500
+       ${statusTabCart === false ? "" : "-translate-x-60"}`}
+      >
+        <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 gap-5 ">
           {products.length === 0 ? (
             <p className="text-center text-gray-500">No products found</p>
           ) : (

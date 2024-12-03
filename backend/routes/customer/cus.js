@@ -55,7 +55,7 @@ router.post("/register", async (req, res) => {
     res.status(200).send(result.rows[0]);
   } catch (error) {
     console.log(error);
-    res.status(500).send({ mess: { error } });
+    res.status(500).send({ message: error.detail });
   }
 });
 

@@ -45,11 +45,14 @@ const CustomerForm = () => {
         setCustomerPhoneNumber("");
         setCustomerAddress("");
       } else {
-        showFail();
+        // showFail();
       }
     } catch (error) {
-      console.error("Error:", error);
-      showFail();
+      // console.log("Error:", error.response.data.mess.error.detail);
+      // console.log(error.response);
+      console.log(error.response.data.message);
+
+      showFail(error.response.data.message);
     }
   };
 

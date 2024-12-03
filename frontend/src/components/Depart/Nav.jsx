@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logout from "../../screen/Logout";
 import { NavLink } from "react-router-dom";
+import iconCart from "../../assets/iconCart.png";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleStatusTab } from "../../stores/cart";
 
 export default function Nav() {
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const carts = useSelector((store) => store.cart.items);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let total = 0;
+    carts.forEach((item) => (total += item.quantity));
+    setTotalQuantity(total);
+  }, [carts]);
+
+  const handleOpenTabCart = () => {
+    dispatch(toggleStatusTab());
+  };
   return (
     <>
       <nav className=" border-gray-200 bg-gray-900 ">
@@ -22,9 +38,22 @@ export default function Nav() {
                 : "NULL"}
             </span>
           </a>
-          <div className="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-            <Logout />
+
+          <div className=" flex gap-10 items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+            <div
+              className=" cursor-pointer w-10 h-10 bg-gray-100 rounded-full flex justify-center items-center relative"
+              onClick={handleOpenTabCart}
+            >
+              <img src={iconCart} alt="" className="w-6" />
+              <span className="absolute top-2/3 right-1/2 bg-red-500 text-white text-sm w-5 h-5 rounded-full flex justify-center items-center">
+                {totalQuantity}
+              </span>
+            </div>
+            <div>
+              <Logout />
+            </div>
           </div>
+
           <div
             className="items-center justify-between  w-full md:flex md:w-auto md:order-1"
             id="navbar-cta"

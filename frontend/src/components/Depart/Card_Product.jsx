@@ -2,6 +2,8 @@ import React from "react";
 import iconCart from "../../assets/iconCart.png";
 import iconSale from "../../assets/sale.png";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../../stores/cart";
 
 export default function Card_Product(props) {
   const {
@@ -16,8 +18,20 @@ export default function Card_Product(props) {
     product_image,
   } = props.data;
 
+  const carts = useSelector((store) => store.cart.items);
+  const dispatch = useDispatch();
+
   const handleAddToCart = () => {
-    alert("Handle Add To Cart!!!");
+    dispatch(
+      addToCart({
+        productId: product_id,
+        name: product_name,
+        price: product_unit_price,
+        quantity: 1,
+        discount: product_discount,
+        img: product_image,
+      })
+    );
   };
   return (
     <>
@@ -38,7 +52,7 @@ export default function Card_Product(props) {
           <></>
         )}
 
-        <Link to={product_id}>
+        <Link to={`${product_id}`}>
           <div className="flex flex-row">
             <img
               src={`data:image/jpeg;base64,${product_image}`}
@@ -65,50 +79,4 @@ export default function Card_Product(props) {
       </div>
     </>
   );
-}
-
-{
-  /* <div className="products-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mx-2">
-{products.length === 0 ? (
-  <p className="text-center text-gray-500">No products found</p>
-) : (
-  products.map((product) => (
-    <div
-      key={product.product_id}
-      className="product-item bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-    >
-      <h3 className="text-xl font-semibold text-gray-800">
-        {product.product_name}
-      </h3>
-      <p className="text-gray-600 mt-2">{product.product_description}</p>
-      <p className="mt-2 text-sm text-gray-500">
-        Category: {product.product_category}
-      </p>
-      <p className="text-sm text-gray-500">
-        Type: {product.product_type}
-      </p>
-      <p className="text-lg font-semibold text-gray-900 mt-3">
-        Price: ${product.product_unit_price}
-      </p>
-      <p className="mt-2 text-sm text-gray-600">
-        Rating: {product.product_rating}
-      </p>
-      <p className="mt-1 text-sm text-gray-600">
-        Discount: {product.product_discount}%
-      </p>
-      <p className="mt-1 text-sm text-gray-600">
-        Status: {product.product_state}
-      </p>
-
-      {product.product_image && (
-        <img
-          src={`data:image/jpeg;base64,${product.product_image}`}
-          alt={product.product_name}
-          className="mt-4 w-full h-48 object-cover rounded-lg"
-        />
-      )}
-    </div>
-  ))
-)}
-</div> */
 }

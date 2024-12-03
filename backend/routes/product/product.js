@@ -53,7 +53,9 @@ router.post("/products", upload.single("productImage"), async (req, res) => {
 //Get Product
 router.get("/products", async (req, res) => {
   try {
-    const result = await db.query("select * from products");
+    const result = await db.query(
+      "select * from products where product_state = 'available' "
+    );
     const productsWithBase64Images = result.rows.map((product) => {
       if (product.product_image) {
         // Convert Buffer to Base64 string
