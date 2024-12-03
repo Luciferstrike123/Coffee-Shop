@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../db");
+const bcrypt = require("bcrypt");
 
 function formatPhoneNumber(phoneNumber) {
   // Remove any non-numeric characters
@@ -24,8 +25,12 @@ router.post("/register", async (req, res) => {
   } = req.body;
 
   Format_phone = formatPhoneNumber(customer_phone_number);
+  if (!Format_phone) {
+    return res.status(400).send({ message: "Invalid phone number format" });
+  }
 
   try {
+    const hashedPassword = await bcrypt.hash(customer_password, 10);
     const result = await db.query(
       `Insert into customers
         (customer_name,
@@ -39,7 +44,7 @@ router.post("/register", async (req, res) => {
       [
         customer_name,
         customer_username,
-        customer_password,
+        hashedPassword,
         customer_birthdate,
         customer_gender,
         customer_address,
