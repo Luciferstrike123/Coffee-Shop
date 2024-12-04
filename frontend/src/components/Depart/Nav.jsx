@@ -61,6 +61,16 @@ export default function Nav() {
             <ul className="flex flex-col text-2xl font-robot p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <NavLink
+                  to="gift"
+                  className={({ isActive }) =>
+                    isActive ? "text-red-800 underline" : "text-blue-500"
+                  }
+                >
+                  GIFT
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
                   to="add-product"
                   className={({ isActive }) =>
                     isActive ? "text-red-800 underline" : "text-blue-500"
@@ -69,6 +79,7 @@ export default function Nav() {
                   ADD PRODUCT
                 </NavLink>
               </li>
+
               <li>
                 <NavLink
                   to="employee"

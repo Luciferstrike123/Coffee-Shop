@@ -7,7 +7,6 @@ import Login from "../screen/Login";
 import ProtectRoute from "../components/ProtectRoute";
 import Overview from "../components/Admin/Overview";
 import Product_Ad from "../components/Admin/Product";
-import Gift from "../components/Admin/Gift";
 import Employee from "../components/Admin/Employee";
 import Cus from "../components/Admin/Cus";
 
@@ -15,6 +14,8 @@ import Home_De from "../components/Depart/Home_Depart";
 import CustomerForm from "../components/Depart/Resgister";
 import Employ_De from "../components/Depart/Employee";
 import AddProduct from "../components/Depart/AddProduct";
+import Detail from "../components/Depart/detailProduct";
+import Gift from "../components/Depart/Gift/index";
 
 export default function AppRoute() {
   return (
@@ -41,6 +42,8 @@ export default function AppRoute() {
         <Route path="register" element={<CustomerForm />} />
         <Route path="employee" element={<Employ_De />} />
         <Route path="add-product" element={<AddProduct />} />
+        <Route path="gift" element={<Gift />} />
+        <Route path=":id" element={<Detail />} />
       </Route>
     </Routes>
   );
