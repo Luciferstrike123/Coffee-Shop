@@ -139,7 +139,7 @@ export default function cartTab() {
               <CartItem key={key} data={item} />
             ))}
           </div>
-          {quantityTotal && (
+          {quantityTotal != 0 && (
             <>
               <div className="flex justify-center gap-16 text-white text-2xl  mt-2">
                 <span>Total: {priceTotal}$</span>

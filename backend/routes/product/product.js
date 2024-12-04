@@ -50,7 +50,7 @@ router.post("/products", upload.single("productImage"), async (req, res) => {
   }
 });
 
-//Get Product
+//Get All Product
 router.get("/products", async (req, res) => {
   try {
     const result = await db.query(
@@ -70,6 +70,55 @@ router.get("/products", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({ mess: "Failed to fetch products" });
+  }
+});
+
+// Get detail product
+router.get("/product/:id", async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const result = await db.query(
+      "select * from products where product_id = $1",
+      [productId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(400).send({ message: "Product not found" });
+    }
+    result.rows[0].product_image =
+      result.rows[0].product_image.toString("base64");
+
+    res.status(200).send(result.rows[0]);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.detail });
+  }
+});
+
+router.put("/product/:id", async (req, res) => {
+  const product_id = req.params.id;
+  const { product_state } = req.body;
+
+  try {
+    const query = `
+    update products
+    set product_state = $1
+    where product_id = $2
+    returning product_state  
+    `;
+
+    const values = [product_state, product_id];
+    const results = await db.query(query, values);
+
+    if (results.rows.length == 0) {
+      return res.status(404).send({ message: "Product not found" });
+    }
+
+    res.status(200).send(results.rows[0]);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ messgae: error.detail });
   }
 });
 

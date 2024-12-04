@@ -10,8 +10,9 @@ export function showFail(text) {
 
 export function showSucess(text) {
   Swal.fire({
-    title: "Logging Sucess!",
+    title: "Sucess!",
     icon: "success",
+    text: text,
   });
 }
 
