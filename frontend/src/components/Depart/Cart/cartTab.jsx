@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleStatusTab } from "../../../stores/cart";
+import { clearCart } from "../../../stores/cart";
 import CartItem from "./cartItem";
 
 const employee2 = [
@@ -13,9 +14,8 @@ const employee2 = [
 const table = [...Array(31).keys()];
 
 export default function cartTab() {
-  console.log(table);
   const [phone, setPhone] = useState();
-  const [employeeId, setEmployeeId] = useState();
+  const [employeeId, setEmployeeId] = useState(35);
   const [tableId, setTableId] = useState();
   const [quantityTotal, setQuantity] = useState();
   const [priceTotal, setPrice] = useState();
@@ -25,13 +25,6 @@ export default function cartTab() {
   const handleCloseTabCart = () => {
     dispatch(toggleStatusTab());
   };
-
-  const CheckPhone = (e) => {
-    e.preventDefault();
-
-    alert(phone);
-  };
-
   useEffect(() => {
     let totalQuantity = 0;
     let totalPrice = 0;
@@ -42,6 +35,26 @@ export default function cartTab() {
     setQuantity(totalQuantity);
     setPrice(totalPrice.toFixed(2));
   }, [carts]);
+
+  const CheckPhone = (e) => {
+    e.preventDefault();
+
+    alert(phone);
+  };
+
+  function handleCheckout() {
+    console.log({
+      phone: phone,
+      employeeId: employeeId,
+      tableId: tableId,
+      quantityTotal: quantityTotal,
+      priceTotal: priceTotal,
+    });
+
+    const cart = JSON.parse(localStorage.getItem("carts"));
+    console.log(cart);
+    dispatch(clearCart());
+  }
 
   return (
     <>
@@ -141,7 +154,9 @@ export default function cartTab() {
           <button className="bg-black text-white" onClick={handleCloseTabCart}>
             CLOSE
           </button>
-          <button className="bg-amber-600 text-white">CHECKOUT</button>
+          <button onClick={handleCheckout} className="bg-amber-600 text-white">
+            CHECKOUT
+          </button>
         </div>
       </div>
     </>
