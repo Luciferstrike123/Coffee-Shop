@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CardGift from "./cardGift";
+import { showFail, showSucess } from "../../Alert/Alert";
+
 import axios from "axios";
 
 export default function gift() {
@@ -31,7 +33,23 @@ export default function gift() {
   }
 
   const handlephone = () => {
-    alert(phone);
+    axios
+      .post("http://localhost:3300/api/check-phone", {
+        phone_number: phone,
+      })
+      .then((res) => {
+        console.log(res.data);
+
+        if (res.data.customer_point < 0) {
+          setPoint("");
+          showFail(res.data.error_message);
+        } else {
+          setPoint(res.data.customer_point);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching Phone:", error);
+      });
   };
 
   function CheckPhone(e) {
@@ -41,7 +59,7 @@ export default function gift() {
 
   return (
     <>
-      <div>
+      <div className="flex items-center gap-20">
         <form onSubmit={CheckPhone} className="flex items-center gap-2">
           <label htmlFor="phone" className="text-2xl">
             Nhập phonenumber của khách:
@@ -61,6 +79,13 @@ export default function gift() {
             Check
           </button>
         </form>
+
+        {point != "" && (
+          <div className="text-2xl border-l-8 border-black pl-10">
+            <span>Điểm của quý khách là: </span>
+            <span>{point}</span>
+          </div>
+        )}
       </div>
       <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 gap-5 px-10 mt-4 ">
         {gifts.length === 0 ? (

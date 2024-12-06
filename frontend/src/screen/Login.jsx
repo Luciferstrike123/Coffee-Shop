@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import bg_login from "../assets/bg-login.jpeg";
 import axios from "axios";
 
 import { showFail, showSucess } from "../components/Alert/Alert";
@@ -21,6 +22,10 @@ export default function Login() {
   }, []);
 
   const handleLogin = async () => {
+    if (username == "" || password == "") {
+      showFail();
+      return;
+    }
     try {
       const res = await axios.post("http://localhost:3300/api/login", {
         username,
@@ -52,8 +57,13 @@ export default function Login() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
-        <div className="bg-white p-6 rounded-lg shadow-md w-80">
+      <div
+        className="flex flex-col justify-center items-center min-h-screen bg-gray-100  bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bg_login})`,
+        }}
+      >
+        <div className="bg-purple-50 p-6 rounded-lg shadow-md w-80">
           <h2 className="text-xl font-semibold mb-4 text-center">Login</h2>
           <input
             type="text"

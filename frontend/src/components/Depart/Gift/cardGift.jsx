@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import iconCart from "../../../assets/iconCart.png";
 import { ImGift } from "react-icons/im";
+import axios from "axios";
+import { showFail, showSucess } from "../../Alert/Alert";
 
 export default function cardGift(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +17,31 @@ export default function cardGift(props) {
 
   const SubmitForm = (e) => {
     e.preventDefault();
-    alert(phone);
+    console.log({
+      phone_number: phone,
+      gift_id: gift_id,
+      gift_point: gift_point,
+      quantity: quantity,
+    });
+    axios
+      .post("http://localhost:3300/api/exchange-gift", {
+        phone_number: phone,
+        gift_id: gift_id,
+        gift_point: gift_point,
+        quantity: quantity,
+      })
+      .then((res) => {
+        console.log(res.data);
+
+        if (res.data.status == 400) {
+          showFail(res.data.mess);
+        } else {
+          showSucess(res.data.mess);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching exchange:", error);
+      });
   };
   return (
     <>
@@ -85,7 +111,7 @@ export default function cardGift(props) {
               </label>
               <input
                 required
-                min={0}
+                min={1}
                 type="number"
                 value={quantity}
                 id="quantity"

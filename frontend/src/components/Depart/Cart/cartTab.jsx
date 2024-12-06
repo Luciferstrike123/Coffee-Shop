@@ -3,35 +3,68 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleStatusTab } from "../../../stores/cart";
 import { clearCart } from "../../../stores/cart";
 import CartItem from "./cartItem";
-
-const employee2 = [
-  { id: 35, name: "Melanie" },
-  { id: 36, name: "Christen" },
-  { id: 37, name: "Evelyn" },
-  { id: 38, name: "Byron" },
-];
-
-const table = [...Array(31).keys()];
+import { showFail, showSucess } from "../../Alert/Alert";
+import axios from "axios";
 
 export default function cartTab() {
-  const [phone, setPhone] = useState();
-  const [employeeId, setEmployeeId] = useState(35);
-  const [tableId, setTableId] = useState();
-  const [quantityTotal, setQuantity] = useState();
-  const [priceTotal, setPrice] = useState();
+  const [phone, setPhone] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
+  const [employee, setEmployee] = useState([]);
+  const [tableId, setTableId] = useState("");
+  const [table, setTable] = useState([]);
+  const [quantityTotal, setQuantity] = useState("");
+  const [priceTotal, setPrice] = useState("");
   const carts = useSelector((store) => store.cart.items);
   const statusTab = useSelector((store) => store.cart.statusTab);
   const dispatch = useDispatch();
   const handleCloseTabCart = () => {
     dispatch(toggleStatusTab());
   };
+
+  const handleEmployee = (id) => {
+    const params = {
+      department_id: id,
+      position: "Cashier",
+    };
+    axios
+      .get("http://localhost:3300/api/employees", { params })
+      .then((response) => {
+        setEmployee(response.data);
+        setEmployeeId(response.data[0].employee_id);
+      })
+      .catch((error) => {
+        console.error("Error fetching employees:", error);
+      });
+  };
+
+  const handleTable = async (id) => {
+    axios
+      .post("http://localhost:3300/api/tables", {
+        department_id: id,
+      })
+      .then((response) => {
+        setTable(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching Tables:", error);
+      });
+  };
+
+  useEffect(() => {
+    const id = localStorage.getItem("id");
+    if (id) {
+      handleEmployee(id);
+      handleTable(id);
+    }
+  }, []);
   useEffect(() => {
     let totalQuantity = 0;
     let totalPrice = 0;
     carts.forEach((item) => {
       totalQuantity += item.quantity;
-      totalPrice += item.quantity * item.price * (1 - item.discount);
+      totalPrice += (item.quantity * item.price * (100 - item.discount)) / 100;
     });
+
     setQuantity(totalQuantity);
     setPrice(totalPrice.toFixed(2));
   }, [carts]);
@@ -39,21 +72,75 @@ export default function cartTab() {
   const CheckPhone = (e) => {
     e.preventDefault();
 
-    alert(phone);
+    axios
+      .post("http://localhost:3300/api/check-phone", {
+        phone_number: phone,
+      })
+      .then((res) => {
+        if (res.data.customer_point < 0) {
+          showFail(res.data.error_message);
+        } else {
+          showSucess(`${phone} already existed!!!`);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching Phone:", error);
+      });
   };
 
   function handleCheckout() {
+    if (phone == "") {
+      showFail("Please type phone");
+      return;
+    } else if (tableId == "") {
+      showFail("Please chose table");
+      return;
+    } else if (quantityTotal == 0) {
+      showFail("No product to checkout");
+      return;
+    }
+
+    const cart = JSON.parse(localStorage.getItem("carts"));
+    const simplifiedCart = cart.map((item) => ({
+      productId: item.productId,
+      price: item.price,
+      discount: item.discount,
+      quantity: item.quantity,
+    }));
+
     console.log({
+      department_id: localStorage.getItem("id"),
       phone: phone,
       employeeId: employeeId,
       tableId: tableId,
       quantityTotal: quantityTotal,
       priceTotal: priceTotal,
+      cart: simplifiedCart,
     });
 
-    const cart = JSON.parse(localStorage.getItem("carts"));
-    console.log(cart);
-    dispatch(clearCart());
+    axios
+      .post("http://localhost:3300/api/order", {
+        department_id: localStorage.getItem("id"),
+        phone: phone,
+        employeeId: employeeId,
+        tableId: tableId,
+        quantityTotal: quantityTotal,
+        priceTotal: priceTotal,
+        cart: simplifiedCart,
+      })
+      .then((res) => {
+        console.log(res.data);
+
+        if (res.data.status == 400) {
+          showFail(res.data.mess);
+        } else {
+          showSucess(res.data.mess);
+          dispatch(clearCart());
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching exchange:", error);
+      });
   }
 
   return (
@@ -104,15 +191,19 @@ export default function cartTab() {
                 onChange={(e) => setEmployeeId(e.target.value)}
                 className="  rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               >
-                {employee2.map((item) => {
-                  return (
-                    <>
-                      <option value={item.id} className="bg-gray-300">
-                        {item.name}
-                      </option>
-                    </>
-                  );
-                })}
+                {employee.length > 0 &&
+                  employee.map((item) => {
+                    return (
+                      <>
+                        <option
+                          value={item.employee_id}
+                          className="bg-gray-300"
+                        >
+                          {item.employee_last_name}
+                        </option>
+                      </>
+                    );
+                  })}
               </select>
             </div>
             <div className="flex flex-col mt-2">
@@ -124,10 +215,10 @@ export default function cartTab() {
                 {table.map((item, index) => (
                   <button
                     key={index}
-                    onClick={() => setTableId(item)}
+                    onClick={() => setTableId(item.table_id)}
                     className="p-1 border rounded-md bg-gray-300 hover:bg-gray-400"
                   >
-                    {item}
+                    {item.table_id}
                   </button>
                 ))}
               </div>

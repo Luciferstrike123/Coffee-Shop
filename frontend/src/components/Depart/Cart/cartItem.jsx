@@ -29,7 +29,7 @@ export default function cartItem(props) {
       <div className="flex justify-between items-center bg-slate-600 text-white p-2 border-b-2 border-slate-700 gap-5 rounded-md">
         <img src={`data:image/jpeg;base64,${img}`} alt="" className="w-12" />
         <h3>{name}</h3>
-        <p>{(price * quantity * (1 - discount)).toFixed(2)}</p>
+        <p>{((price * quantity * (100 - discount)) / 100).toFixed(2)}</p>
         <div className="w-20 flex justify-between gap-2">
           <button
             className="bg-gray-200 rounded-full w-6 h-6 text-cyan-600"
