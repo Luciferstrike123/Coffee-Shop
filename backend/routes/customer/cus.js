@@ -64,4 +64,14 @@ router.get("/customers", async (req, res) => {
   }
 });
 
+router.get("/customers/top-spenders", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM classify_customers_by_spending() LIMIT 10");
+    res.status(200).send(result.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ mess: { error } });
+  }
+});
+
 module.exports = router;

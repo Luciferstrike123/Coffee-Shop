@@ -15,13 +15,13 @@ const SalesOverviewChart = () => {
         { start_date: "2023-03-01", end_date: "2023-03-31", name: "Mar" },
         { start_date: "2023-04-01", end_date: "2023-04-30", name: "Apr" },
         { start_date: "2023-05-01", end_date: "2023-05-31", name: "May" },
-        // { start_date: "2023-06-01", end_date: "2023-06-30", name: "Jun" },
-        // { start_date: "2023-07-01", end_date: "2023-07-31", name: "Jul" },
-        // { start_date: "2023-08-01", end_date: "2023-08-31", name: "Aug" },
-        // { start_date: "2023-09-01", end_date: "2023-09-30", name: "Sep" },
-        // { start_date: "2023-10-01", end_date: "2023-10-31", name: "Oct" },
-        // { start_date: "2023-11-01", end_date: "2023-11-30", name: "Nov" },
-        // { start_date: "2023-12-01", end_date: "2023-12-31", name: "Dec" },
+        { start_date: "2023-06-01", end_date: "2023-06-30", name: "Jun" },
+        { start_date: "2023-07-01", end_date: "2023-07-31", name: "Jul" },
+        { start_date: "2023-08-01", end_date: "2023-08-31", name: "Aug" },
+        { start_date: "2023-09-01", end_date: "2023-09-30", name: "Sep" },
+        { start_date: "2023-10-01", end_date: "2023-10-31", name: "Oct" },
+        { start_date: "2023-11-01", end_date: "2023-11-30", name: "Nov" },
+        { start_date: "2023-12-01", end_date: "2023-12-31", name: "Dec" },
     ];
 
     useEffect(() => {

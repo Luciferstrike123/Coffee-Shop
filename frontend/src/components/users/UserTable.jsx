@@ -59,7 +59,7 @@ const UserTable = () => {
                 <div className='relative '>
                     <input
                         type='text'
-                        placeholder='Search products...'
+                        placeholder='Search users...'
                         className='bg-gray-700 text-gray-100 p-2 pl-8 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500'
                         onChange={handleSearch}
                         value={searchTerm}

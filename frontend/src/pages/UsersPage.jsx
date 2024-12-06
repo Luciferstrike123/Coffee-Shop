@@ -3,11 +3,12 @@ import {AlertTriangle, DollarSign, TrendingUp, User, UserIcon} from "lucide-reac
 import StatCard from "../components/common/StatCard";
 import {motion} from "framer-motion";
 import UserTable from "../components/users/UserTable";
+import TopUsers from "../components/users/TopUsers";
 
 const UsersPage = () => {
     return (
         <div className="flex-1 relative z-10 overflow-auto">
-            <Header title="Products"/>
+            <Header title="Users"/>
 
             <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
                 {/* Stats Card */}
@@ -22,7 +23,8 @@ const UsersPage = () => {
                     <StatCard name="Low Stock" icon={AlertTriangle} value='567' color="#f59e0b"/>
                     <StatCard name="Total Revenue" icon={DollarSign} value='567' color="#ef4444"/> */}
                 </motion.div>
-
+                
+                <TopUsers />
                 <UserTable />
             </main>
         </div>
