@@ -34,6 +34,7 @@ app.use("/api", require("./routes/customer/cus"));
 app.use("/api", require("./routes/employee/employ"));
 app.use("/api", require("./routes/product/index"));
 app.use("/api", require("./routes/revenue/index"));
+app.use("/api", require("./routes/order/index"));
 
 /*
 http://localhost:3300

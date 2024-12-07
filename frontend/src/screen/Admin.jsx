@@ -5,6 +5,7 @@ import ProductsPage from "../pages/ProductsPage";
 import UsersPage from "../pages/UsersPage";
 import Sidebar from "../components/Sidebar";
 import SalesPage from "../pages/SalesPage";
+import OrderPage from "../pages/OrderPage";
 
 export default function Admin() {
   return (
@@ -20,6 +21,7 @@ export default function Admin() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/sales" element={<SalesPage />} />
+          <Route path="/orders" element={<OrderPage />} />
         </Routes>
       </div>
   )
