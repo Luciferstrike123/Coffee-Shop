@@ -74,4 +74,15 @@ router.get("/customers/top-spenders", async (req, res) => {
   }
 });
 
+router.get("/customers/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await db.query("select * from customers where customer_id = $1", [id]);
+    res.status(200).send(result.rows[0]);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ mess: { error } });
+  }
+});
+
 module.exports = router;

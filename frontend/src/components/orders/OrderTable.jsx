@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loading from '../common/Loading';
 import { motion } from 'framer-motion';
+import { Eye } from 'lucide-react';
+import OrderDetailsModal from './OrderDetailsModal';
+import Pagination from '../common/Pagination';
 
 const OrderTable = () => {
   const [orders, setOrders] = useState([]);
@@ -10,6 +13,7 @@ const OrderTable = () => {
   const [totalOrders, setTotalOrders] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const fetchOrders = async (page) => {
     setLoading(true);
@@ -42,18 +46,6 @@ const OrderTable = () => {
     return <div className="text-red-500">{error}</div>;
   }
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
-
   return (
     <motion.div
       className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700"
@@ -67,16 +59,21 @@ const OrderTable = () => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Order ID</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Customer ID</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Date</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Time</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Total Quantity</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Total Price</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
             {orders.map((order) => (
               <tr key={order.order_id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">{order.order_id}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                  {order.order_customer_id}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
                   {new Date(order.order_transaction_date).toLocaleDateString()}
                 </td>
@@ -89,6 +86,14 @@ const OrderTable = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
                   ${parseFloat(order.order_total_price).toFixed(2)}
                 </td>
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
+									<button 
+                    className='text-indigo-400 hover:text-indigo-300 mr-2'
+                    onClick={() => setSelectedOrder(order.order_id)}
+                  >
+										<Eye size={18} />
+									</button>
+								</td>
               </tr>
             ))}
           </tbody>
@@ -96,25 +101,15 @@ const OrderTable = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="mt-4 flex justify-between items-center">
-        <button
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-700 text-gray-200 rounded disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <span className="text-gray-200">
-          Page {currentPage} of {totalPages} ({totalOrders} orders)
-        </span>
-        <button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-700 text-gray-200 rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} className='mt-4' />
+      
+      {/* Order Details Modal */}
+      {selectedOrder && (
+        <OrderDetailsModal
+          orderId={selectedOrder}
+          onClose={() => setSelectedOrder(null)}
+        />
+      )}
     </motion.div>
   );
 };

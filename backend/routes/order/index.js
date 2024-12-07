@@ -51,4 +51,19 @@ router.get('/orders', async (req, res) => {
   }
 });
 
+router.get('/orders/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const query = `SELECT * FROM display_order_bill($1)`;
+    const result = await db.query(query, [id]);
+    if(result.rows.length === 0) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+    res.status(200).json(result.rows[0]);
+  } catch(error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch order' });
+  }
+})
+
 module.exports = router;
