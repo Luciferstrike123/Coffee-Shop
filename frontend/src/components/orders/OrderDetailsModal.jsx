@@ -11,7 +11,6 @@ const OrderDetailsModal = ({ orderId, onClose }) => {
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:3300/api/orders/${orderId}`);
-        console.log(response.data);
         setOrderDetails(response.data);
         setLoading(false);
       } catch (error) {
@@ -36,13 +35,13 @@ const OrderDetailsModal = ({ orderId, onClose }) => {
           <button onClick={onClose} className="text-gray-100 hover:text-gray-400 text-2xl">&times;</button>
         </div>
         {loading ? (
-            <Loading />
+          <Loading />
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
           <div>
             <p className="text-gray-100 mb-4">
-              <strong>Department:</strong> {orderDetails.department_name}
+              <strong>Department:</strong> {orderDetails[0].department_name}
             </p>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-700">
@@ -55,32 +54,32 @@ const OrderDetailsModal = ({ orderId, onClose }) => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700">
-                  {
-                    <tr>
-                      <td className="px-6 py-4 text-sm text-gray-200">{orderDetails.product_name}</td>
-                      <td className="px-6 py-4 text-sm text-gray-200">{orderDetails.order_item_quantity}</td>
-                      <td className="px-6 py-4 text-sm text-gray-200">{orderDetails.product_discount}</td>
+                  {orderDetails.map((item, index) => (
+                    <tr key={index}>
+                      <td className="px-6 py-4 text-sm text-gray-200">{item.product_name}</td>
+                      <td className="px-6 py-4 text-sm text-gray-200">{item.order_item_quantity}</td>
+                      <td className="px-6 py-4 text-sm text-gray-200">{item.product_discount}</td>
                       <td className="px-6 py-4 text-sm text-gray-200">
-                        ${parseFloat(orderDetails.order_item_price).toFixed(2)}
+                        ${parseFloat(item.order_item_price).toFixed(2)}
                       </td>
                     </tr>
-                    }
+                  ))}
                 </tbody>
               </table>
             </div>
             <div className="mt-4 text-gray-100">
               <p>
-                <strong>Total Price:</strong> ${parseFloat(orderDetails.order_total_price).toFixed(2)}
+                <strong>Total Price:</strong> ${parseFloat(orderDetails[0].order_total_price).toFixed(2)}
               </p>
               <p>
                 <strong>Transaction Date:</strong>{' '}
-                {new Date(orderDetails.order_transaction_date).toLocaleDateString()}
+                {new Date(orderDetails[0].order_transaction_date).toLocaleDateString()}
               </p>
               <p>
-                <strong>Transaction Time:</strong> {orderDetails.order_transaction_time}
+                <strong>Transaction Time:</strong> {orderDetails[0].order_transaction_time}
               </p>
               <p>
-                <strong>Employee ID:</strong> {orderDetails.order_employee_id}
+                <strong>Employee ID:</strong> {orderDetails[0].order_employee_id}
               </p>
             </div>
           </div>

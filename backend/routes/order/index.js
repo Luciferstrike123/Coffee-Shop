@@ -59,7 +59,7 @@ router.get('/orders/:id', async (req, res) => {
     if(result.rows.length === 0) {
       return res.status(404).json({ error: 'Order not found' });
     }
-    res.status(200).json(result.rows[0]);
+    res.status(200).json(result.rows);
   } catch(error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to fetch order' });
