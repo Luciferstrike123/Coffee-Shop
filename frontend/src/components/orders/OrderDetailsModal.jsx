@@ -43,6 +43,9 @@ const OrderDetailsModal = ({ orderId, onClose }) => {
             <p className="text-gray-100 mb-4">
               <strong>Department:</strong> {orderDetails[0].department_name}
             </p>
+            <p className='text-gray-100 mb-4'>
+              <strong>Table ID:</strong> {orderDetails[0].table_id}
+            </p>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-700">
                 <thead>
