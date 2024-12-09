@@ -172,7 +172,7 @@ export default function Employee() {
                     {employee.employee_phone_number}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    {employee.employee_salary} USD/Day
+                    {employee.employee_salary} USD/Year
                   </td>
                 </tr>
               ))
