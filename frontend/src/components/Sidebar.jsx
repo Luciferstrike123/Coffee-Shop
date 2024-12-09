@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Gift, ChartNoAxesGantt, DollarSign, ShoppingCart, ShoppingBag, Settings, TrendingUp, Menu, User } from "lucide-react";
+import { FileUser, Gift, ChartNoAxesGantt, DollarSign, ShoppingCart, ShoppingBag, Settings, TrendingUp, Menu, User } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -7,6 +7,7 @@ const SIDEBAR_ITEMS = [
     { name: "Overview", icon: ChartNoAxesGantt, color: "#6366f1", href: "/admin" },
     { name: "Products", icon: ShoppingBag, color: "#8b56f6", href: "/admin/products" },
     { name: "Users", icon: User, color: "#ec4899", href: "/admin/users" },
+    { name: "Staffs", icon: FileUser, color: "#77a74e", href: "/admin/employees"},
     { name: "Sales", icon: DollarSign, color: "#10b981", href: "/admin/sales" },
     { name: "Orders", icon: ShoppingCart, color: "#f59e0b", href: "/admin/orders" },
     // { name: "Analytics", icon: TrendingUp, color: "#3b82f6", href: "/analytics" },
