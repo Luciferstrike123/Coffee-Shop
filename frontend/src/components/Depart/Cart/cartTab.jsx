@@ -10,7 +10,7 @@ export default function cartTab() {
   const [phone, setPhone] = useState("");
   const [employeeId, setEmployeeId] = useState("");
   const [employee, setEmployee] = useState([]);
-  const [tableId, setTableId] = useState("");
+  const [tableId, setTableId] = useState(0);
   const [table, setTable] = useState([]);
   const [quantityTotal, setQuantity] = useState("");
   const [priceTotal, setPrice] = useState("");
@@ -91,9 +91,6 @@ export default function cartTab() {
   function handleCheckout() {
     if (phone == "") {
       showFail("Please type phone");
-      return;
-    } else if (tableId == "") {
-      showFail("Please chose table");
       return;
     } else if (quantityTotal == 0) {
       showFail("No product to checkout");
