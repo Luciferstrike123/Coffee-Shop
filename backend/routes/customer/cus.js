@@ -54,13 +54,47 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/customers", async (req, res) => {
+router.get('/customers', async (req, res) => {
+  const { page = 1, limit = 10, search = '' } = req.query;
+
+  // Calculate offset
+  const offset = (page - 1) * limit;
+
   try {
-    const result = await db.query("select * from customers");
-    res.status(200).send(result.rows);
+    // Fetch total number of customers for pagination metadata
+    const countResult = await db.query('SELECT COUNT(*) FROM customers WHERE customer_name ILIKE $1', [`%${search}%`]);
+    const totalCustomers = parseInt(countResult.rows[0].count, 10);
+
+    // Fetch customers with pagination
+    const customersResult = await db.query(
+      `
+      SELECT
+        customer_id,
+        customer_name,
+        customer_birthdate,
+        customer_gender,
+        customer_point
+      FROM
+        customers
+      WHERE
+        customer_name ILIKE $1
+      ORDER BY
+        customer_name ASC
+      LIMIT $2 OFFSET $3
+      `,
+      [`%${search}%`, limit, offset]
+    );
+
+    // Return customers along with pagination metadata
+    res.status(200).json({
+      totalUsers: totalCustomers,
+      totalPages: Math.ceil(totalCustomers / limit),
+      currentPage: parseInt(page, 10),
+      users: customersResult.rows,
+    });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({ mess: { error } });
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch customers' });
   }
 });
 

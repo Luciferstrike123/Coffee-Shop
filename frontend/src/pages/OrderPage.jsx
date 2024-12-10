@@ -16,9 +16,9 @@ const OrderPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
                 >
-                    <StatCard name="Total Orders" icon={ShoppingBag} value="123" color="#6366f1" />
+                    <StatCard name="Total Orders" icon={ShoppingBag} value="11940055" color="#6366f1" />
                     <StatCard name="Pending Orders" icon={Clock} value="0" color="#8b56f6" />
-                    <StatCard name="Completed Orders" icon={CheckCircle} value="123" color="#ec4899" />
+                    <StatCard name="Completed Orders" icon={CheckCircle} value="11940055" color="#ec4899" />
                 </motion.div>
                 <OrderTable />
             </main>

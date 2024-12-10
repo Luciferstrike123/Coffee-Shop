@@ -18,10 +18,10 @@ const ProductsPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
                 >
-                    <StatCard name="Total Products" icon={Package} value='1234' color="#6366f1"/>
-                    <StatCard name="Top Selling" icon={TrendingUp} value='1234' color="#8b56f6"/>
-                    <StatCard name="Low Stock" icon={AlertTriangle} value='567' color="#f59e0b"/>
-                    <StatCard name="Total Revenue" icon={DollarSign} value='567' color="#ef4444"/>
+                    <StatCard name="Total Products" icon={Package} value='91' color="#6366f1"/>
+                    <StatCard name="Top Selling" icon={TrendingUp} value='58' color="#8b56f6"/>
+                    <StatCard name="Low Stock" icon={AlertTriangle} value='33' color="#f59e0b"/>
+                    <StatCard name="Total Revenue" icon={DollarSign} value='253.68M' color="#ef4444"/>
                 </motion.div>
 
                 <ProductTable/>

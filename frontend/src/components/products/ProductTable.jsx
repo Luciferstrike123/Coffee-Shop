@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Search, Trash, Edit } from 'lucide-react';
 import Pagination from '../common/Pagination';
 import Loading from '../common/Loading';
+import ProductModal from './ProductModals';
 
 const ProductTable = () => {
     const [products, setProducts] = useState([]);
@@ -11,6 +12,7 @@ const ProductTable = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const itemsPerPage = 10;
 
     useEffect(() => {
@@ -110,7 +112,7 @@ const ProductTable = () => {
                                         <div className='text-sm text-gray-200'>{item.product_discount}%</div>
                                     </td>
                                     <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-                                        <button className='text-indigo-400 hover:text-indigo-300 mr-2'>
+                                        <button className='text-indigo-400 hover:text-indigo-300 mr-2' onClick={()=>setSelectedProduct(item.product_id)}>
                                             <Edit size={18} />
                                         </button>
                                         <button className='text-red-400 hover:text-red-300'>
@@ -123,6 +125,12 @@ const ProductTable = () => {
                     </table>)}
             </div>
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} className='mt-4' />
+            {selectedProduct && (
+                <ProductModal
+                    productID={selectedProduct}
+                    onClose={() => setSelectedProduct(null)}
+                />
+            )}
         </motion.div>
     );
 };

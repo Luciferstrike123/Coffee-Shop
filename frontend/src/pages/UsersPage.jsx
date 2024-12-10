@@ -18,7 +18,7 @@ const UsersPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
                 >
-                    <StatCard name="Total Users" icon={UserIcon} value='1234' color="#6366f1"/>
+                    <StatCard name="Total Users" icon={UserIcon} value='423729' color="#6366f1"/>
                     {/* <StatCard name="Top Selling" icon={TrendingUp} value='1234' color="#8b56f6"/>
                     <StatCard name="Low Stock" icon={AlertTriangle} value='567' color="#f59e0b"/>
                     <StatCard name="Total Revenue" icon={DollarSign} value='567' color="#ef4444"/> */}

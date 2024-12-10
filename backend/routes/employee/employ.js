@@ -58,4 +58,20 @@ router.get("/employees", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+router.get("/employees/ranking", async (req, res) => {
+  const {start_date, end_date, department_id} = req.query;
+  try {
+    const query = `SELECT * FROM get_employee_rankings($1, $2, $3);`
+    const res = await db.query(query, [start_date, end_date, department_id || null]);
+
+    if(res.rows.length == 0) {
+      res.status(404).json({message: "Data not found"})
+    }
+    res.status(200).json(res.rows);
+   } catch(error) {
+    console.error(error);
+    res.status(500).send({message: error.message});
+  }
+})
 module.exports = router;
